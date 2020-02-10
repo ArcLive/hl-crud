@@ -1,5 +1,8 @@
+#!/usr/bin/env python3
+
 import mysql.connector
 import configparser
+import getopt, sys
 
 
 class HlCrud:
@@ -70,13 +73,41 @@ class HlCrud:
 
 if __name__ == '__main__':
     db = HlCrud("config.ini")
-    data = {"BoardSN": 1.61, "CompName": "AAA", "Type": "032-1113-000HF", "cModel": "690-6G189-0600-305RH1_BOT",
-            "DLinference_result": "PASS_Hig_0.97",
-            "directory": "TEST_690-6G189-0600-305RH1_1614919000211_AOI_20191217042523", "ConfirmDefect": "PASS",
-            "MachineDefect": "PASS", "Status": "PASS",
-            "image_name": "690-6G189-0600-305RH1_BOT~032-1113-000HF~C1002_1~1614919000211_	SolderLight.jpg_LowAngleLight.jpg_UniformLight.jpg_WhiteLight.jpg",
-            "LightingCondition": "ss", "image_scantime": "33", "BoardRESULT": "sfs"}
-    db.show_data("data")
-    db.insert_data("data", data)
-    db.search_data("data", "CompName='AAA'")
-    db.delete_data("data", "CompName='AAA'")
+    option = ''
+    tablename = ''
+    where = ''
+    try:
+        opts, args = getopt.getopt(sys.argv[1:], "hs:t:w:")
+    except getopt.GetoptError:
+        print('hl-crud.py -s <crud type> -t <tablename> -w <where or data>')
+        sys.exit(2)
+    for opt, arg in opts:
+        if opt == '-h':
+            print('hl-crud.py -s <crud type> -t <tablename> -w <where or data>')
+            sys.exit()
+        elif opt in ("-s"):
+            option = arg
+        elif opt in ("-t"):
+            tablename = arg
+        elif opt in ("-w"):
+            where = arg
+    if option == "insert":
+        try:
+            db.insert_data(tablename, where)
+        except:
+            print("Wrong data or table name")
+    elif option == "delete":
+        try:
+            db.delete_data(tablename, where)
+        except:
+            print("Wrong delete condition")
+    elif option == "show":
+        try:
+            db.show_data(tablename)
+        except:
+            print("Wrong table name")
+    elif option == "search":
+        try:
+            db.search_data(tablename, where)
+        except:
+            print("Wrong data or table name")
