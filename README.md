@@ -10,16 +10,16 @@ Python module for CRUD module - Python3 | MySQL | Docker
   - if crud type is "search" or "delete", use where condition
   - if crud type is "insert", use data.
 ## Examples
-  - **help command**
+  - **help command**<p>
   hl-crud.py -h
-  - **show all data**
+  - **show all data**<p>
   hl-crud.py -s show -t data
-  - **insert data**
+  - **insert data**<p>
   insert_data = {....}
   hl-crud.py -s insert -t data -w insert_data
-  - **delete data**
+  - **delete data**<p>
   hl-crud.py -s delete -t data -w CompName='aaa'
-  - **search data**
+  - **search data**<p>
   hl-crud.py -s search -t data -w CompName='aaa'
   
   
