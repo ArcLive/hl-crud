@@ -34,8 +34,12 @@ Python module for CRUD module - Python3 | MySQL | Docker
   data = {....}
   ~~~
     hl-crud.py -s insert -t boards -w <data>
-    Ex] data={"BoardSN":123,"CompName:"Fesv","Result":"Pass"}
+    Ex1] data={"BoardSN":123,"CompName:"Fesv","Result":"Pass"}
         hl-crud.py -s insert -t boards -w data
+    Ex2] import csv
+         reader = csv.DictReader(open("data.csv"))
+         for row in reader:
+            h1-crud.py -s insert -t boards -w row
   ~~~
   - **delete board**<p>
   ~~~
