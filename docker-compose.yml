@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+    db:
+        image: mysql:5.7
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: hlcrud
+        ports:
+            - "30000:3306"
