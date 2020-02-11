@@ -3,6 +3,7 @@ import mysql.connector
 from mysql.connector import Error
 import configparser
 import getopt, sys
+import json
 
 class HlCrud:
     config = configparser.ConfigParser()
@@ -36,6 +37,17 @@ class HlCrud:
             x = self.db.cursor()
             x.execute(sql)
             self.db.commit()
+
+            sql="""CREATE TABLE IF NOT EXISTS filenames (
+                col1 text,
+                col2 text,
+                col3 text,
+                col4 text,
+                col5 text
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;"""
+            x = self.db.cursor()
+            x.execute(sql)
+            self.db.commit()
         except Error as err:
             print("Fail: {}".format(err))
 
@@ -43,11 +55,12 @@ class HlCrud:
         try:
             col = '\',\''.join(data.keys())
             col = col.replace("'", "`")
-            sql = "INSERT INTO %s (`%s`) VALUES %s " % (table, col, tuple(data.values()))
+            sql = "INSERT INTO %s (`%s`) VALUES %s;" % (table, col, tuple(data.values()))
+            print(sql)
             x = self.db.cursor()
             x.execute(sql)
             self.db.commit()
-            print('Succefully inserted'.format(cursor.rowcount))
+            print('Succefully inserted'.format(x.rowcount))
         except Error as err:
             print("Fail: {}".format(err))
 
@@ -65,14 +78,10 @@ class HlCrud:
     def update(self, table, data, where):
         try:
             col = ''
-            whr = ''
             for k, v in data.items():
-                temp = "`" + k + "` = " + "'" + v + "'"
-                col += " ," + temp if col else temp
-            for k, v in where.items():
-                temp = "`" + k + "` = " + "'" + v + "'"
-                whr += " ," + temp if whr else temp
-            sql = "UPDATE `%s` SET %s WHERE %s " % (table, col, whr)
+                t = "`" + k + "` = " + "'" + v + "'"
+                col += " ," + t if col else t
+            sql = "UPDATE `%s` SET %s WHERE %s " % (table, col, where)
             x = self.db.cursor()
             x.execute(sql)
             self.db.commit()
@@ -109,39 +118,41 @@ if __name__ == '__main__':
     db = HlCrud("config.ini")
     option = ''
     tablename = ''
+    data = {}
     where = ''
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "hs:t:w:")
+        opts, args = getopt.getopt(sys.argv[1:], "hs:t:d:w:")
     except getopt.GetoptError:
-        print('hl-crud.py -s <crud type> -t <tablename> -w <where or data>')
+        print('hl-crud.py -s [command] -t [tablename] -d [data] -w [where]')
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print('hl-crud.py -s <crud type> -t <tablename> -w <where or data>')
+            print('Usage: hl-crud.py -s [command] -t [tablename] -d [data] -w [where]')
+            print('Run CRUD commands on MySQL Database\n')
+            print(' -s\t\t command name - insert/delete/show/search/update')
+            print(' -t\t\t tablename - boards/filenames')
+            print(' -d\t\t data - JSON format')
+            print(' -w\t\t condition\n')
             sys.exit()
         elif opt in ("-s"):
             option = arg
         elif opt in ("-t"):
             tablename = arg
+        elif opt in ("-d"):
+            try:
+                data = json.loads(arg)
+            except:
+                print("Exception: data is not JSON")
+                sys.exit()
         elif opt in ("-w"):
             where = arg
     if option == "insert":
-        try:
-            db.insert(tablename, where)
-        except:
-            print("Wrong data or table name")
+        db.insert(tablename, data)
     elif option == "delete":
-        try:
-            db.delete(tablename, where)
-        except:
-            print("Wrong delete condition")
+        db.delete(tablename, where)
     elif option == "show":
-        try:
-            db.show(tablename)
-        except:
-            print("Wrong table name")
+        db.show(tablename)
     elif option == "search":
-        try:
-            db.search(tablename, where)
-        except:
-            print("Wrong data or table name")
+        db.search(tablename, where)
+    elif option == "update":
+        db.update(tablename, data, where)

@@ -13,41 +13,36 @@ Python module for CRUD module - Python3 | MySQL | Docker
 
 ## Command Usage
   ~~~
-    hl-crud.py -s 'crud type' -t 'table name' -w 'where or data'
+    hl-crud.py -s [command] -t [tablename] -d [data] -w [where]
   ~~~
-  ### crud type
-  insert, delete, show, search
-  ### table name
-  ### where or data
-  - if crud type is "search" or "delete", use where condition
-  - if crud type is "insert", use data.
+
 ## Examples
   - **help command**<p>
   ~~~
     hl-crud.py -h
   ~~~
-  - **show all boards**<p>
+  - **show command**<p>
   ~~~
     hl-crud.py -s show -t boards
+    hl-crud.py -s show -t filenames
   ~~~
-  - **insert board**<p>
-  data = {....}
+  - **insert command**<p>
+  data = {...}
   ~~~
-    hl-crud.py -s insert -t boards -w <data>
-    Ex1] data={"BoardSN":123,"CompName:"Fesv","Result":"Pass"}
-        hl-crud.py -s insert -t boards -w data
-    Ex2] import csv
-         reader = csv.DictReader(open("data.csv"))
-         for row in reader:
-            h1-crud.py -s insert -t boards -w row
+    hl-crud.py -s insert -t boards -d '{"BoardSN":123,"CompName:"Fesv","Result":"Pass", ...}'
+    hl-crud.py -s insert -t filenames -d '{"col1":"AAAA","col2:"BBB-C1234-D123-E12345~FOT","col3":"G16149190021","col4":"ILAOI-B","col5":"20200204195425"}'
   ~~~
-  - **delete board**<p>
+  - **delete command**<p>
   ~~~
     hl-crud.py -s delete -t boards -w CompName='aaa'
   ~~~
-  - **search board**<p>
+  - **select command**<p>
   ~~~
-    hl-crud.py -s search -t boards -w CompName='aaa'
+    hl-crud.py -s select -t boards -w CompName='aaa'
   ~~~
-  
+  - **update command**<p>
+  ~~~
+    hl-crud.py -s update -t boards -d '{"BoardSN":123,"CompName:"Fesv","Result":"Pass", ...}' -w CompName='aaa'
+  ~~~
+
   
