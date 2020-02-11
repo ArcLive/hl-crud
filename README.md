@@ -33,7 +33,9 @@ Python module for CRUD module - Python3 | MySQL | Docker
   - **insert board**<p>
   data = {....}
   ~~~
-    hl-crud.py -s insert -t boards -w <data> # please update by sample query
+    hl-crud.py -s insert -t boards -w <data>
+    Ex] data={"BoardSN":123,"CompName:"Fesv","Result":"Pass"}
+        hl-crud.py -s insert -t boards -w data
   ~~~
   - **delete board**<p>
   ~~~
