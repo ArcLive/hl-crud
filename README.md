@@ -2,13 +2,19 @@
 Python module for CRUD module - Python3 | MySQL | Docker
 
 ## Installation
-  ~~~sudo sh setup.sh~~~
+  ~~~
+    sudo sh setup.sh
+  ~~~
 
 ## How to run docker image
-  ~~~docker-compose up~~~
+  ~~~
+    docker-compose up
+  ~~~
 
 ## Command Usage
-  ~~~hl-crud.py -s 'crud type' -t 'table name' -w 'where or data'~~~
+  ~~~
+    hl-crud.py -s 'crud type' -t 'table name' -w 'where or data'
+  ~~~
   ### crud type
   insert, delete, show, search
   ### table name
@@ -17,15 +23,25 @@ Python module for CRUD module - Python3 | MySQL | Docker
   - if crud type is "insert", use data.
 ## Examples
   - **help command**<p>
-  ~~~hl-crud.py -h~~~
+  ~~~
+    hl-crud.py -h
+  ~~~
   - **show all boards**<p>
-  ~~~hl-crud.py -s show -t boards~~~
+  ~~~
+    hl-crud.py -s show -t boards
+  ~~~
   - **insert board**<p>
   data = {....}
-  ~~~hl-crud.py -s insert -t boards -w <data>~~~ # please update by sample query
+  ~~~
+    hl-crud.py -s insert -t boards -w <data> # please update by sample query
+  ~~~
   - **delete board**<p>
-  ~~~hl-crud.py -s delete -t boards -w CompName='aaa'~~~
+  ~~~
+    hl-crud.py -s delete -t boards -w CompName='aaa'
+  ~~~
   - **search board**<p>
-  ~~~hl-crud.py -s search -t boards -w CompName='aaa'~~~
+  ~~~
+    hl-crud.py -s search -t boards -w CompName='aaa'
+  ~~~
   
   
