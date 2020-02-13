@@ -8,6 +8,7 @@ Python module for CRUD module - Python3 | MySQL | Docker
 
 ## How to run docker image
   ~~~
+    docker-compose build --no-cache
     docker-compose up
   ~~~
 

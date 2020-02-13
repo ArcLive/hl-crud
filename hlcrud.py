@@ -115,7 +115,7 @@ class HlCrud:
         self.db.close()
 
 if __name__ == '__main__':
-    db = HlCrud("config.ini")
+    hlcrud = HlCrud("config.ini")
     option = ''
     tablename = ''
     data = {}
@@ -147,12 +147,12 @@ if __name__ == '__main__':
         elif opt in ("-w"):
             where = arg
     if option == "insert":
-        db.insert(tablename, data)
+        hlcrud.insert(tablename, data)
     elif option == "delete":
-        db.delete(tablename, where)
+        hlcrud.delete(tablename, where)
     elif option == "show":
-        db.show(tablename)
+        hlcrud.show(tablename)
     elif option == "search":
-        db.search(tablename, where)
+        hlcrud.search(tablename, where)
     elif option == "update":
-        db.update(tablename, data, where)
+        hlcrud.update(tablename, data, where)

@@ -8,3 +8,9 @@ services:
             MYSQL_DATABASE: hlcrud
         ports:
             - "30000:3306"
+    app:
+        build: .
+        volumes:
+            - .:/app
+        depends_on: 
+            - db
